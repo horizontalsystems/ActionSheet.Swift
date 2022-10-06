@@ -7,13 +7,14 @@ public class ActionSheetControllerNew: UIViewController {
     private var disposeBag = DisposeBag()
 
     private let content: UIViewController
-    private var viewDelegate: ActionSheetViewDelegate?
+    private weak var viewDelegate: ActionSheetViewDelegate?
     weak var interactiveTransitionDelegate: InteractiveTransitionDelegate?
 
     private let configuration: ActionSheetConfiguration
 
     private var keyboardHeightRelay = BehaviorRelay<CGFloat>(value: 0)
     private var didAppear = false
+    private var dismissing = false
 
     private var animator: ActionSheetAnimator?
     private var ignoreByInteractivePresentingBreak = false
@@ -39,6 +40,7 @@ public class ActionSheetControllerNew: UIViewController {
         self.animator = animator
         transitioningDelegate = animator
         animator.interactiveTransitionDelegate = self
+        viewDelegate?.actionSheetView = self
 
         if let interactiveTransitionDelegate = content as? InteractiveTransitionDelegate {
             self.interactiveTransitionDelegate = interactiveTransitionDelegate
@@ -65,13 +67,13 @@ public class ActionSheetControllerNew: UIViewController {
                 maker.edges.equalToSuperview()
             }
             tapView.handleTap = { [weak self] in
+                self?.dismissing = true
                 self?.dismiss(animated: true)
             }
         }
 
         // add and setup content as child view controller
         addChildController()
-        viewDelegate?.actionSheetView = self
     }
 
     // lifecycle
@@ -80,6 +82,7 @@ public class ActionSheetControllerNew: UIViewController {
             view.superview?.addConstraints(savedConstraints)
         }
 
+        dismissing = false
         super.viewWillAppear(animated)
 
         if !ignoreByInteractivePresentingBreak {
@@ -102,11 +105,11 @@ public class ActionSheetControllerNew: UIViewController {
             content.endAppearanceTransition()
         }
         ignoreByInteractivePresentingBreak = false
-
         didAppear = true
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
+        dismissing = true
         savedConstraints = view.superview?.constraints
 
         let interactiveTransitionStarted = animator?.interactiveTransitionStarted ?? false
@@ -161,7 +164,7 @@ extension ActionSheetControllerNew {
     }
 
     func setContentViewPosition(animated: Bool) {
-        guard content.view.superview != nil else {
+        guard !dismissing, content.view.superview != nil else {
             return
         }
 
@@ -169,7 +172,7 @@ extension ActionSheetControllerNew {
             maker.leading.trailing.equalToSuperview().inset(configuration.sideMargin)
             if configuration.style == .sheet {      // content controller from bottom of superview
                 maker.top.equalToSuperview()
-                maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin).inset(configuration.sideMargin + keyboardHeightRelay.value).priority(.required)
+                maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeightRelay.value).priority(.required)
             } else {                                // content controller by center of superview
                 maker.centerX.equalToSuperview()
                 maker.centerY.equalToSuperview().priority(.low)
@@ -194,6 +197,10 @@ extension ActionSheetControllerNew {
 
 extension ActionSheetControllerNew: ActionSheetView {
 
+    public func contentWillDismissed() {
+        dismissing = true
+    }
+
     public func dismissView(animated: Bool) {
         DispatchQueue.main.async {
             self.dismiss(animated: animated)
@@ -210,6 +217,7 @@ extension ActionSheetControllerNew: InteractiveTransitionDelegate {
 
     public func start(direction: TransitionDirection) {
         interactiveTransitionDelegate?.start(direction: direction)
+        dismissing = direction == .dismiss
     }
 
     public func move(direction: TransitionDirection, percent: CGFloat) {
@@ -217,6 +225,10 @@ extension ActionSheetControllerNew: InteractiveTransitionDelegate {
     }
 
     public func end(direction: TransitionDirection, cancelled: Bool) {
+        if direction == .dismiss, cancelled {
+            dismissing = false
+        }
+
         interactiveTransitionDelegate?.end(direction: direction, cancelled: cancelled)
         guard configuration.ignoreInteractiveFalseMoving else {
             return
@@ -225,6 +237,7 @@ extension ActionSheetControllerNew: InteractiveTransitionDelegate {
             ignoreByInteractivePresentingBreak = true
         } else {
             content.beginAppearanceTransition(false, animated: true)
+            viewDelegate?.didInteractiveDismissed()
         }
     }
 
@@ -244,4 +257,25 @@ extension ActionSheetControllerNew {
         content
     }
 
+}
+
+@available(iOS 13.0, *)
+extension ActionSheetControllerNew: UIAdaptivePresentationControllerDelegate {
+    public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        self.presentationController?.delegate?.presentationControllerShouldDismiss?(presentationController) ?? false
+    }
+
+    public func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        dismissing = true
+        self.presentationController?.delegate?.presentationControllerWillDismiss?(presentationController)
+    }
+
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        dismissing = false
+        self.presentationController?.delegate?.presentationControllerDidDismiss?(presentationController)
+    }
+
+    public func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        self.presentationController?.delegate?.presentationControllerDidAttemptToDismiss?(presentationController)
+    }
 }

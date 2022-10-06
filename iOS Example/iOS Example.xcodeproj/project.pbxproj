@@ -11,6 +11,7 @@
 		3A4FBEDE2750D935004A9429 /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4FBEDC2750D935004A9429 /* SectionsViewController.swift */; };
 		3A4FBEDF2750D935004A9429 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4FBEDD2750D935004A9429 /* ContentViewController.swift */; };
 		3A4FBEE12750D93E004A9429 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4FBEE02750D93E004A9429 /* ViewController.swift */; };
+		D3500A3328EEDEF60093A369 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3500A3228EEDEF60093A369 /* SectionsTableView */; };
 		D94502FD261F98A500F6BF2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D94502FC261F98A500F6BF2E /* Assets.xcassets */; };
 		D945030C261F99CC00F6BF2E /* ActionSheet in Frameworks */ = {isa = PBXBuildFile; productRef = D945030B261F99CC00F6BF2E /* ActionSheet */; };
 /* End PBXBuildFile section */
@@ -20,7 +21,7 @@
 		3A4FBEDC2750D935004A9429 /* SectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
 		3A4FBEDD2750D935004A9429 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		3A4FBEE02750D93E004A9429 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D94502F5261F98A400F6BF2E /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D94502F5261F98A400F6BF2E /* ActionSheet Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ActionSheet Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94502FC261F98A500F6BF2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -29,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3500A3328EEDEF60093A369 /* SectionsTableView in Frameworks */,
 				D945030C261F99CC00F6BF2E /* ActionSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,7 +50,7 @@
 		D94502F6261F98A400F6BF2E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D94502F5261F98A400F6BF2E /* iOS Example.app */,
+				D94502F5261F98A400F6BF2E /* ActionSheet Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,9 +92,10 @@
 			name = "iOS Example";
 			packageProductDependencies = (
 				D945030B261F99CC00F6BF2E /* ActionSheet */,
+				D3500A3228EEDEF60093A369 /* SectionsTableView */,
 			);
 			productName = "iOS Example";
-			productReference = D94502F5261F98A400F6BF2E /* iOS Example.app */;
+			productReference = D94502F5261F98A400F6BF2E /* ActionSheet Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -119,6 +122,9 @@
 				Base,
 			);
 			mainGroup = D94502EC261F98A400F6BF2E;
+			packageReferences = (
+				D3500A3128EEDEF60093A369 /* XCRemoteSwiftPackageReference "SectionsTableView" */,
+			);
 			productRefGroup = D94502F6261F98A400F6BF2E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -277,18 +283,22 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.iOS-Example";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "ActionSheet Demo";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -299,17 +309,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.iOS-Example";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "ActionSheet Demo";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -336,7 +350,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		D3500A3128EEDEF60093A369 /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/SectionsTableView.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		D3500A3228EEDEF60093A369 /* SectionsTableView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3500A3128EEDEF60093A369 /* XCRemoteSwiftPackageReference "SectionsTableView" */;
+			productName = SectionsTableView;
+		};
 		D945030B261F99CC00F6BF2E /* ActionSheet */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ActionSheet;
