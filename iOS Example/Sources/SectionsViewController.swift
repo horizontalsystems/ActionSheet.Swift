@@ -5,7 +5,7 @@ import ActionSheet
 
 class SectionsViewController: UIViewController, SectionsDataSource {
     private let titleLabel = UILabel()
-    private let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SelfSizedSectionsTableView(style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +30,12 @@ class SectionsViewController: UIViewController, SectionsDataSource {
         titleLabel.textAlignment = .center
         titleLabel.text = "Swipe Here in Title"
 
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+
         tableView.snp.makeConstraints { maker in
             maker.top.equalTo(titleLabel.snp.bottom).offset(8)
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(tableView.contentSize.height)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
         }
 
         tableView.alwaysBounceVertical = false
@@ -42,17 +44,13 @@ class SectionsViewController: UIViewController, SectionsDataSource {
 
     private func reload() {
         tableView.reload()
-
-        tableView.snp.updateConstraints { maker in
-            maker.height.equalTo(tableView.contentSize.height)
-        }
     }
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
         var rows = [RowProtocol]()
 
-        for i in 0..<10 {
+        for i in 0..<Int.random(in: 5...20) {
             let sendButtonRow = Row<UITableViewCell>(id: "indexed_row", height: 44, bind: { cell, _ in
                 cell.backgroundColor = .clear
                 cell.selectionStyle = .none
