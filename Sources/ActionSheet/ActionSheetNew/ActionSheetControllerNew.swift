@@ -19,7 +19,6 @@ public class ActionSheetControllerNew: UIViewController {
     private var animator: ActionSheetAnimator?
     private var ignoreByInteractivePresentingBreak = false
 
-    private var keyboardAccessoryView = UIView()
     private var savedConstraints: [NSLayoutConstraint]?
 
     public required init?(coder aDecoder: NSCoder) {
@@ -48,7 +47,7 @@ public class ActionSheetControllerNew: UIViewController {
         modalPresentationStyle = .custom
 
         NotificationCenter.default.addObserver(self,
-                selector: #selector(self.keyboardNotification(notification:)),
+                selector: #selector(keyboardNotification(notification:)),
                 name: UIResponder.keyboardWillChangeFrameNotification,
                 object: nil)
     }

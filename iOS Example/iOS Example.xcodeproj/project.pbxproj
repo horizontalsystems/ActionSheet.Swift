@@ -11,6 +11,7 @@
 		3A4FBEDE2750D935004A9429 /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4FBEDC2750D935004A9429 /* SectionsViewController.swift */; };
 		3A4FBEDF2750D935004A9429 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4FBEDD2750D935004A9429 /* ContentViewController.swift */; };
 		3A4FBEE12750D93E004A9429 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4FBEE02750D93E004A9429 /* ViewController.swift */; };
+		6BB2032A298D1375009A4075 /* SelfSizedSectionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB20329298D1375009A4075 /* SelfSizedSectionTableView.swift */; };
 		D3500A3328EEDEF60093A369 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3500A3228EEDEF60093A369 /* SectionsTableView */; };
 		D94502FD261F98A500F6BF2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D94502FC261F98A500F6BF2E /* Assets.xcassets */; };
 		D945030C261F99CC00F6BF2E /* ActionSheet in Frameworks */ = {isa = PBXBuildFile; productRef = D945030B261F99CC00F6BF2E /* ActionSheet */; };
@@ -21,6 +22,7 @@
 		3A4FBEDC2750D935004A9429 /* SectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
 		3A4FBEDD2750D935004A9429 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		3A4FBEE02750D93E004A9429 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6BB20329298D1375009A4075 /* SelfSizedSectionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedSectionTableView.swift; sourceTree = "<group>"; };
 		D94502F5261F98A400F6BF2E /* ActionSheet Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ActionSheet Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94502FC261F98A500F6BF2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,6 +64,7 @@
 				3A4FBEE02750D93E004A9429 /* ViewController.swift */,
 				3A4FBEDD2750D935004A9429 /* ContentViewController.swift */,
 				3A4FBEDC2750D935004A9429 /* SectionsViewController.swift */,
+				6BB20329298D1375009A4075 /* SelfSizedSectionTableView.swift */,
 				D94502FC261F98A500F6BF2E /* Assets.xcassets */,
 			);
 			path = Sources;
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A4FBEDE2750D935004A9429 /* SectionsViewController.swift in Sources */,
+				6BB2032A298D1375009A4075 /* SelfSizedSectionTableView.swift in Sources */,
 				3A4FBEDF2750D935004A9429 /* ContentViewController.swift in Sources */,
 				3A4FBEE12750D93E004A9429 /* ViewController.swift in Sources */,
 				3A4FBED92750D914004A9429 /* AppDelegate.swift in Sources */,

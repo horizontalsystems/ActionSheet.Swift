@@ -15,6 +15,7 @@ class MovingPresentAnimation: BaseAnimation {
         to?.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
+            maker.top.greaterThanOrEqualToSuperview().inset(transitionContext.containerView.safeAreaInsets.top)
         }
 
         return UIViewPropertyAnimator.runningPropertyAnimator(withDuration: duration,
