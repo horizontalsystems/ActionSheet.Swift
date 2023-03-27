@@ -2,9 +2,11 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import UIExtensions
 
-public class ActionSheetControllerNew: UIViewController {
+public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
     private var disposeBag = DisposeBag()
+    public var onDeinit: (() -> ())?
 
     private let content: UIViewController
     private weak var viewDelegate: ActionSheetViewDelegate?
@@ -140,6 +142,7 @@ public class ActionSheetControllerNew: UIViewController {
     }
 
     deinit {
+        onDeinit?()
         removeChildController()
         NotificationCenter.default.removeObserver(self)
     }
