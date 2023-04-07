@@ -1,11 +1,9 @@
+import Foundation
 import UIKit
 import SnapKit
-import RxSwift
-import RxCocoa
 import UIExtensions
 
 public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
-    private var disposeBag = DisposeBag()
     public var onDeinit: (() -> ())?
 
     private let content: UIViewController
@@ -14,7 +12,13 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
     private let configuration: ActionSheetConfiguration
 
-    private var keyboardHeightRelay = BehaviorRelay<CGFloat>(value: 0)
+    private var keyboardHeight: CGFloat = 0 {
+        didSet {
+            keyboardHeightInitialized = true
+        }
+    }
+
+    private var keyboardHeightInitialized = false
     private var didAppear = false
     private var dismissing = false
 
@@ -90,14 +94,9 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
             content.beginAppearanceTransition(true, animated: animated)
         }
 
-        disposeBag = DisposeBag()
-        keyboardHeightRelay
-                .asObservable()
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] height in
-                    self?.setContentViewPosition(animated: true)
-                })
-                .disposed(by: disposeBag)
+        if keyboardHeightInitialized {
+            setContentViewPosition(animated: true)
+        }
     }
 
     public override func viewDidAppear(_ animated: Bool) {
@@ -135,9 +134,9 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
         let endFrameY = endFrame?.origin.y ?? 0
 
         if endFrameY >= UIScreen.main.bounds.size.height {
-            keyboardHeightRelay.accept(0)
+            keyboardHeight = 0
         } else {
-            keyboardHeightRelay.accept(endFrame?.size.height ?? 0.0)
+            keyboardHeight = endFrame?.size.height ?? 0.0
         }
     }
 
@@ -174,11 +173,11 @@ extension ActionSheetControllerNew {
             maker.leading.trailing.equalToSuperview().inset(configuration.sideMargin)
             if configuration.style == .sheet {      // content controller from bottom of superview
                 maker.top.equalToSuperview()
-                maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeightRelay.value).priority(.required)
+                maker.bottom.equalToSuperview().inset(configuration.sideMargin + keyboardHeight).priority(.required)
             } else {                                // content controller by center of superview
                 maker.centerX.equalToSuperview()
                 maker.centerY.equalToSuperview().priority(.low)
-                maker.bottom.lessThanOrEqualTo(view.snp.bottom).inset(keyboardHeightRelay.value + 16)
+                maker.bottom.lessThanOrEqualTo(view.snp.bottom).inset(keyboardHeight + 16)
             }
             if let height = viewDelegate?.height {
                 maker.height.equalTo(height)
